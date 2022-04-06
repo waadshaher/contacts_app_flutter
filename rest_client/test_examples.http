@@ -1,0 +1,48 @@
+# This file is only for testing the json server api
+@baseUrl = http://localhost:3333
+
+### REST Example 1:
+### Get the list of all users
+GET {{baseUrl}}/data HTTP/1.1
+Content-Type: application/json
+
+### REST Example 2
+### Get the user whose id 1
+GET {{baseUrl}}/data/1 HTTP/1.1
+Content-Type: application/json
+
+### REST Example 3
+### Create a new user
+POST {{baseUrl}}/data HTTP/1.1
+Content-Type: application/json
+
+{
+    "user" : "Noname",
+    "phone" : "Please update your phone",
+    "check-in": "2020-08-01 12:10:05"
+
+}
+
+### REST Example 4
+### Update/Replace the info of the user whose id 11
+PUT {{baseUrl}}/data/11 HTTP/1.1
+Content-Type: application/json
+
+{
+    "user" : "John",
+    "phone" : "123456"
+}
+
+### REST Example 5
+### Update the fullName attribute of the user whose id 11
+PATCH {{baseUrl}}/data/11 HTTP/1.1
+Content-Type: application/json
+
+{
+    "user" : "John Maxwell"
+}
+
+### REST Example 6
+### Delete the user whose id 11
+DELETE {{baseUrl}}/data/11 HTTP/1.1
+Content-Type: application/json
