@@ -1,24 +1,3 @@
-# vimigo_technical_assessment
-
-## Project Requirements
-Your application must have the following:
-1. Users able to see a sortable list based on the data set provided below.
-2. All the data time format should be display in d MMM Y hh:mm a format
-3. Users are able to search through the list based on the keyword that users key in.
-4. Users able to add a new contact information into the sortable list
-5. When user successfully add new contact to the list, an indicator should be display
-that user had successfully completed the action
-6. Users able to click the particular contact to see the details of contact in another page
-7. When a user first opens up the app, an onboarding screen / introduction screen
-should be shown to educate users how to use the app.
-8. Display an animation using a sprite sheet that is provided in the link below on the
-right bottom of the app.
----
-## Data Set
-<details>
-  <summary>Click to expand!</summary>
-  
-  ```json
 {
   "data": [
     {
@@ -83,5 +62,3 @@ right bottom of the app.
     }
   ]
 }
-```
-</details>

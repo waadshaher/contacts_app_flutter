@@ -1,0 +1,10 @@
+{
+  "name": "json_server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npx json-server --watch -p 3333 db.json"
+  },
+  "author": "",
+  "license": "ISC"
+}
