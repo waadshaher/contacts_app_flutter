@@ -1,5 +1,6 @@
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
@@ -63,7 +64,7 @@ class _SortablePageState extends State<SortablePage> {
                     ),
                     title: TextField(
                       decoration: InputDecoration(
-                        hintText: 'type in contact name...',
+                        hintText: 'Search',
                         hintStyle: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -133,7 +134,17 @@ class _SortablePageState extends State<SortablePage> {
         DateTime time = user.checkIn;
         String formattedDate = DateFormat('d MMM yyyy hh:mm a').format(time);
         final cells = [user.name, user.phoneNumber, formattedDate];
-        return DataRow(cells: getCells(cells));
+        return DataRow(
+            cells: getCells(cells),
+            onLongPress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(
+                      userData: user,
+                    ),
+                  ));
+            });
       }).toList();
 
   List<DataCell> getCells(List<dynamic> cells) =>
