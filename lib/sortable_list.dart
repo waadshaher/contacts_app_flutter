@@ -2,6 +2,7 @@ import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:intl/intl.dart';
 
 class SortablePage extends StatefulWidget {
   @override
@@ -90,8 +91,9 @@ class _SortablePageState extends State<SortablePage> {
       .toList();
 
   List<DataRow> getRows(List<User> users) => users.map((User user) {
-        final cells = [user.name, user.phoneNumber, user.checkIn];
-
+        DateTime time = user.checkIn;
+        String formattedDate = DateFormat('d MMM yyyy hh:mm a').format(time);
+        final cells = [user.name, user.phoneNumber, formattedDate];
         return DataRow(cells: getCells(cells));
       }).toList();
 
