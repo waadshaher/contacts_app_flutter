@@ -46,6 +46,13 @@ class _SortablePageState extends State<SortablePage> {
             ),
           ),
         ),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: getContacts(),
     );
