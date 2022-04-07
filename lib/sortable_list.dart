@@ -24,6 +24,8 @@ class _SortablePageState extends State<SortablePage> {
   int? sortColumnIndex;
   bool isAscending = false;
   List<User> users = [];
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBarText = const Text('Contacts Dataset');
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _SortablePageState extends State<SortablePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contacts Dataset"),
+        title: customSearchBarText,
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -49,8 +51,38 @@ class _SortablePageState extends State<SortablePage> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                if (customIcon.icon == Icons.search) {
+                  customIcon = const Icon(Icons.cancel);
+                  customSearchBarText = const ListTile(
+                    leading: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    title: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'type in contact name...',
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                } else {
+                  customIcon = const Icon(Icons.search);
+                  customSearchBarText = const Text('Contacts Dataset');
+                }
+              });
+            },
+            icon: customIcon,
           )
         ],
       ),
