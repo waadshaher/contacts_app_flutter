@@ -5,6 +5,8 @@ import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 
+import 'screens/create_new_contact.dart';
+
 class SortablePage extends StatefulWidget {
   @override
   _SortablePageState createState() => _SortablePageState();
@@ -37,58 +39,100 @@ class _SortablePageState extends State<SortablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: customSearchBarText,
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.red, Colors.purple],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
+        appBar: AppBar(
+          title: customSearchBarText,
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.red, Colors.purple],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
+              ),
             ),
           ),
-        ),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                if (customIcon.icon == Icons.search) {
-                  customIcon = const Icon(Icons.cancel);
-                  customSearchBarText = const ListTile(
-                    leading: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                    title: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      style: TextStyle(
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBarText = const ListTile(
+                      leading: Icon(
+                        Icons.search,
                         color: Colors.white,
+                        size: 28,
                       ),
-                    ),
-                  );
-                } else {
-                  customIcon = const Icon(Icons.search);
-                  customSearchBarText = const Text('Contacts Dataset');
-                }
-              });
-            },
-            icon: customIcon,
-          )
-        ],
-      ),
-      body: getContacts(),
-    );
+                      title: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  } else {
+                    customIcon = const Icon(Icons.search);
+                    customSearchBarText = const Text('Contacts Dataset');
+                  }
+                });
+              },
+              icon: customIcon,
+            )
+          ],
+        ),
+        body: getContacts(),
+        floatingActionButton: FloatingActionButton(
+          heroTag: 'uniqueTag',
+          hoverElevation: 50,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateContact(),
+                ));
+          },
+          child: Container(
+            width: 60,
+            height: 60,
+            child: const Icon(
+              Icons.add,
+              size: 40,
+            ),
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
+          ),
+        )
+        // floatingActionButton: FloatingActionButton(
+        //   heroTag: 'uniqueTag',
+        //   hoverElevation: 50,
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => CreateContact(),
+        //         ));
+        //   },
+        //   child: Container(
+        //       decoration: const BoxDecoration(
+        //         gradient: LinearGradient(
+        //           colors: [Colors.red, Colors.purple],
+        //           begin: Alignment.bottomRight,
+        //           end: Alignment.topLeft,
+        //         ),
+        //       ),
+        //       child: const Icon(Icons.add)),
+        // ),
+        );
   }
 
   FutureBuilder<List<User>> getContacts() {
