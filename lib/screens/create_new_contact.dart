@@ -240,9 +240,16 @@ class _CreateContactState extends State<CreateContact> {
                   setState(() {
                     _isLoading = false;
                   });
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
                   if (result) {
+                    final snackBar = SnackBar(
+                      content: const Text('New contact is added'),
+                      duration: const Duration(seconds: 30),
+                      action: SnackBarAction(
+                        label: 'Okay',
+                        onPressed: () {},
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pop(
                         context,
                         MaterialPageRoute(

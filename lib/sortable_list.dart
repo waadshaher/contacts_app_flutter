@@ -111,28 +111,7 @@ class _SortablePageState extends State<SortablePage> {
                 shape: BoxShape.circle,
                 gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
           ),
-        )
-        // floatingActionButton: FloatingActionButton(
-        //   heroTag: 'uniqueTag',
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => CreateContact(),
-        //         ));
-        //   },
-        //   child: Container(
-        //       decoration: const BoxDecoration(
-        //         gradient: LinearGradient(
-        //           colors: [Colors.red, Colors.purple],
-        //           begin: Alignment.bottomRight,
-        //           end: Alignment.topLeft,
-        //         ),
-        //       ),
-        //       child: const Icon(Icons.add)),
-        // ),
-        );
+        ));
   }
 
   FutureBuilder<List<User>> getContacts() {
