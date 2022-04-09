@@ -5,7 +5,7 @@ import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 
-import 'screens/create_new_contact.dart';
+import 'create_new_contact.dart';
 
 class SortablePage extends StatefulWidget {
   @override

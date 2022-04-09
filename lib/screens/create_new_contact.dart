@@ -67,7 +67,6 @@ class _CreateContactState extends State<CreateContact> {
                   decoration: InputDecoration(
                     hintText: "What is the contact's name?",
                     labelText: "Full Name",
-                    // errorText: _validate ? 'Name Can\'t Be Empty' : null,
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -84,12 +83,6 @@ class _CreateContactState extends State<CreateContact> {
                     border: OutlineInputBorder(
                       borderSide: const BorderSide(color: Colors.pink),
                     ),
-                    // errorBorder: OutlineInputBorder(
-                    //   borderSide: const BorderSide(color: Colors.red),
-                    // ),
-                    // focusedErrorBorder: OutlineInputBorder(
-                    //   borderSide: const BorderSide(color: Colors.red),
-                    // ),
                   )),
               SizedBox(
                 height: 20,
@@ -132,7 +125,6 @@ class _CreateContactState extends State<CreateContact> {
               SizedBox(
                 height: 20,
               ),
-              // DatePicker(),
               DateTimeField(
                   format: dateFormat,
                   onShowPicker: (context, currentValue) async {
@@ -170,7 +162,6 @@ class _CreateContactState extends State<CreateContact> {
               SizedBox(
                 height: 20,
               ),
-              // TimePicker(),
               DateTimeField(
                   format: timeFormat,
                   onShowPicker: (context, currentValue) async {
