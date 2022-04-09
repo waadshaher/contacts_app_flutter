@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:vimigo_technical_assessment/model/user.dart';
 
@@ -25,9 +26,28 @@ class DataService {
     throw response;
   }
 
+  Future post(String endpoint, User data) async {
+    final response = await http.post(Uri.parse('$baseUrl/$endpoint'),
+        headers: {'Content-Type': 'application/json'}, body: jsonEncode(data));
+
+    if (response.statusCode == 201) {
+      return jsonDecode(response.body);
+    }
+    throw response;
+  }
+
   Future<User> getUser(int id) async {
     final json = await get('data/$id');
     return User.fromJson(json);
+  }
+
+  Future<bool> addUser(User user) async {
+    try {
+      await post('data/', user);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<List<User>> getUsers() async {
