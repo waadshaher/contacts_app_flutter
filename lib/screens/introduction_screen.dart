@@ -47,43 +47,62 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
     return IntroductionScreen(
       key: introKey,
-      globalBackgroundColor: Colors.white,
-      globalFooter: SizedBox(
-        width: double.infinity,
-        height: 60,
-        child: ElevatedButton(
-          child: const Text(
-            'Let\'s go right away!',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+      globalFooter: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+            stops: [0.0, 1.0],
+            colors: [Colors.blue, Colors.green],
           ),
-          onPressed: () => _onIntroEnd(context),
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          height: 60,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(Size(double.infinity, 60)),
+              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+            child: const Text(
+              'Let\'s go right away!',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            onPressed: () => _onIntroEnd(context),
+          ),
         ),
       ),
       pages: [
         PageViewModel(
-          title: "Fractional shares",
-          body:
-              "Instead of having to buy an entire share, invest any amount you want.",
+          title: "Welcome to Contacts App!",
+          body: "Follow the screens to learn more about the app.",
+          image: _buildImage('welcome-message.png'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "View contacts",
+          body: "You can view a list of all available contacts.",
           image: _buildImage('img-2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Learn as you go",
+          title: "View contact details",
           body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
-          image: _buildImage('img-3.png'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Kids and teens",
-          body:
-              "Kids and teens can track their stocks 24/7 and place trades that you approve.",
+              "If you'd like to know more details about a contact, you may click on the contact's name from the list.",
           image: _buildImage('img-1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
+          title: "Creating a new contact",
+          body:
+              "If you'd like to add a new contact, simply click on the plus '+' icon and add the new contact's details.",
+          image: _buildImage('img-3.png'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "You've reached the end of the tutorial!",
+          body:
+              "If you'd like to repeat the tutorial, click on 'Start again' button.",
           image: _buildImage('img-2.png'),
           footer: ElevatedButton(
             onPressed: () {
@@ -94,7 +113,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               style: TextStyle(color: Colors.white),
             ),
             style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
+              primary: Colors.lightGreen,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
@@ -104,14 +123,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () => _onIntroEnd(context),
-      showSkipButton: false,
       skipOrBackFlex: 0,
       nextFlex: 0,
       showBackButton: true,
-      back: const Icon(Icons.arrow_back),
-      skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
-      next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      back: Icon(
+        Icons.arrow_back,
+      ),
+      next: Icon(Icons.arrow_forward),
+      done: Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
       curve: Curves.fastLinearToSlowEaseIn,
       controlsMargin: const EdgeInsets.all(16),
       controlsPadding: kIsWeb
