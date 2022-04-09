@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 
@@ -33,7 +32,7 @@ class _CreateContactState extends State<CreateContact> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.red, Colors.purple],
+              colors: [Colors.blue, Colors.green],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),
@@ -49,12 +48,12 @@ class _CreateContactState extends State<CreateContact> {
               TextFormField(
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.pink.shade400,
+                    color: Colors.green.shade400,
                     fontWeight: FontWeight.bold,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'This is a required field';
                     }
                     return null;
                   },
@@ -63,33 +62,26 @@ class _CreateContactState extends State<CreateContact> {
                       _name = value!;
                     });
                   },
-                  cursorColor: Colors.pink,
+                  cursorColor: Colors.blue,
                   decoration: InputDecoration(
                     hintText: "What is the contact's name?",
                     labelText: "Full Name",
-                    // errorText: _validate ? 'Name Can\'t Be Empty' : null,
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink.shade300),
+                        color: Colors.green.shade300),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
                     ),
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.pink)),
+                        borderSide: const BorderSide(color: Colors.lightBlue)),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.pink),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
                     ),
                     border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.pink),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
                     ),
-                    // errorBorder: OutlineInputBorder(
-                    //   borderSide: const BorderSide(color: Colors.red),
-                    // ),
-                    // focusedErrorBorder: OutlineInputBorder(
-                    //   borderSide: const BorderSide(color: Colors.red),
-                    // ),
                   )),
               SizedBox(
                 height: 20,
@@ -97,12 +89,12 @@ class _CreateContactState extends State<CreateContact> {
               TextFormField(
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.pink.shade400,
+                    color: Colors.green.shade300,
                     fontWeight: FontWeight.bold,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'This is a required field';
                     }
                     return null;
                   },
@@ -111,28 +103,30 @@ class _CreateContactState extends State<CreateContact> {
                       _phoneNumber = value!;
                     });
                   },
-                  cursorColor: Colors.pink,
+                  cursorColor: Colors.blue,
                   decoration: InputDecoration(
                     hintText: "What is the contact's phone number?",
                     labelText: "Phone Number",
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink.shade300),
+                        color: Colors.green.shade300),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
                     ),
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.pink)),
+                        borderSide: const BorderSide(color: Colors.lightBlue)),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.pink),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.lightBlue),
                     ),
                   )),
               SizedBox(
                 height: 20,
               ),
-              // DatePicker(),
               DateTimeField(
                   format: dateFormat,
                   onShowPicker: (context, currentValue) async {
@@ -142,10 +136,16 @@ class _CreateContactState extends State<CreateContact> {
                   },
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.pink.shade400,
+                    color: Colors.green.shade400,
                     fontWeight: FontWeight.bold,
                   ),
-                  cursorColor: Colors.pink,
+                  cursorColor: Colors.blue,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'This is a required field';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     setState(() {
                       _selectedDate = value!;
@@ -156,21 +156,23 @@ class _CreateContactState extends State<CreateContact> {
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink.shade300),
+                        color: Colors.green.shade300),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
                     ),
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.pink)),
+                        borderSide: const BorderSide(color: Colors.lightBlue)),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.pink),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.lightBlue),
                     ),
                   )),
               SizedBox(
                 height: 20,
               ),
-              // TimePicker(),
               DateTimeField(
                   format: timeFormat,
                   onShowPicker: (context, currentValue) async {
@@ -182,10 +184,16 @@ class _CreateContactState extends State<CreateContact> {
                   },
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.pink.shade400,
+                    color: Colors.green.shade400,
                     fontWeight: FontWeight.bold,
                   ),
-                  cursorColor: Colors.pink,
+                  cursorColor: Colors.blue,
+                  validator: (value) {
+                    if (value == null) {
+                      return 'This is a required field';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     setState(() {
                       _selectedTime = TimeOfDay.fromDateTime(value!);
@@ -196,15 +204,18 @@ class _CreateContactState extends State<CreateContact> {
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.pink.shade300),
+                        color: Colors.green.shade300),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
                     ),
                     focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.pink)),
+                        borderSide: const BorderSide(color: Colors.lightBlue)),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.pink),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.lightBlue),
                     ),
                   )),
             ],
@@ -240,9 +251,16 @@ class _CreateContactState extends State<CreateContact> {
                   setState(() {
                     _isLoading = false;
                   });
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
                   if (result) {
+                    final snackBar = SnackBar(
+                      content: const Text('New contact is added'),
+                      duration: const Duration(seconds: 30),
+                      action: SnackBarAction(
+                        label: 'Thanks!',
+                        onPressed: () {},
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -279,7 +297,6 @@ class _DatePickerState extends State<DatePicker> {
           color: Colors.pink.shade400,
           fontWeight: FontWeight.bold,
         ),
-        cursorColor: Colors.pink,
         onSaved: (value) {
           setState(() {
             selectedDate = value!;
@@ -323,7 +340,6 @@ class TimePicker extends StatelessWidget {
           color: Colors.pink.shade400,
           fontWeight: FontWeight.bold,
         ),
-        cursorColor: Colors.pink,
         decoration: InputDecoration(
           labelText: "Check-in time",
           floatingLabelBehavior: FloatingLabelBehavior.auto,

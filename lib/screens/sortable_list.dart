@@ -5,7 +5,7 @@ import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
 
-import 'screens/create_new_contact.dart';
+import 'create_new_contact.dart';
 
 class SortablePage extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class _SortablePageState extends State<SortablePage> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.red, Colors.purple],
+                colors: [Colors.blue, Colors.green],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft,
               ),
@@ -109,30 +109,9 @@ class _SortablePageState extends State<SortablePage> {
             ),
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
+                gradient: LinearGradient(colors: [Colors.blue, Colors.green])),
           ),
-        )
-        // floatingActionButton: FloatingActionButton(
-        //   heroTag: 'uniqueTag',
-        //   hoverElevation: 50,
-        //   onPressed: () {
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => CreateContact(),
-        //         ));
-        //   },
-        //   child: Container(
-        //       decoration: const BoxDecoration(
-        //         gradient: LinearGradient(
-        //           colors: [Colors.red, Colors.purple],
-        //           begin: Alignment.bottomRight,
-        //           end: Alignment.topLeft,
-        //         ),
-        //       ),
-        //       child: const Icon(Icons.add)),
-        // ),
-        );
+        ));
   }
 
   FutureBuilder<List<User>> getContacts() {
