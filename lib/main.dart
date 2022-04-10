@@ -32,4 +32,17 @@ class MyApp extends StatelessWidget {
       home: OnBoardingPage(),
     );
   }
+
+  // Widget build(BuildContext context) {
+  //   SystemChrome.setSystemUIOverlayStyle(
+  //     SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+  //   );
+
+  //   return MaterialApp(
+  //     title: 'Introduction screen',
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(primarySwatch: Colors.blue),
+  //     home: OnBoardingPage(),
+  //   );
+  // }
 }

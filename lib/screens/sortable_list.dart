@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
+import 'create_new_contact.dart';
 
 import 'create_new_contact.dart';
 
@@ -30,10 +33,8 @@ class _SortablePageState extends State<SortablePage> {
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBarText = const Text('Contacts Dataset');
 
-  @override
-  void initState() {
-    super.initState();
-    futureUsers = dataService.getUsers();
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 
   @override
@@ -45,7 +46,7 @@ class _SortablePageState extends State<SortablePage> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.red, Colors.purple],
+                colors: [Colors.blue, Colors.green],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft,
               ),
@@ -98,7 +99,7 @@ class _SortablePageState extends State<SortablePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => CreateContact(),
-                ));
+                )).then((onGoBack));
           },
           child: Container(
             width: 60,
@@ -109,12 +110,13 @@ class _SortablePageState extends State<SortablePage> {
             ),
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
+                gradient: LinearGradient(colors: [Colors.blue, Colors.green])),
           ),
         ));
   }
 
   FutureBuilder<List<User>> getContacts() {
+    futureUsers = dataService.getUsers();
     return FutureBuilder<List<User>>(
       future: futureUsers,
       builder: (context, snapshot) {
@@ -165,6 +167,7 @@ class _SortablePageState extends State<SortablePage> {
                   MaterialPageRoute(
                     builder: (context) => DetailView(
                       userData: user,
+                      checkIn: formattedDate,
                     ),
                   ));
             });
