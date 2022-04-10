@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vimigo_technical_assessment/sortable_list.dart';
+import 'package:vimigo_technical_assessment/screens/sortable_list.dart';
 
 void main() {
   runApp(const MyApp());
