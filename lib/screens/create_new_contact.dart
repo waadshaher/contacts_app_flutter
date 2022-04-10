@@ -93,8 +93,12 @@ class _CreateContactState extends State<CreateContact> {
                     fontWeight: FontWeight.bold,
                   ),
                   validator: (value) {
+                    String pattern = r'^(\+?6?01)[0-46-9]-*[0-9]{7,8}$';
+                    RegExp regExp = RegExp(pattern);
                     if (value == null || value.isEmpty) {
                       return 'This is a required field';
+                    } else if (!regExp.hasMatch(value)) {
+                      return 'Please enter valid mobile number';
                     }
                     return null;
                   },
