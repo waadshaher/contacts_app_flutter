@@ -6,6 +6,7 @@ import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
+import 'create_new_contact.dart';
 
 import 'create_new_contact.dart';
 
@@ -166,6 +167,7 @@ class _SortablePageState extends State<SortablePage> {
                   MaterialPageRoute(
                     builder: (context) => DetailView(
                       userData: user,
+                      checkIn: formattedDate,
                     ),
                   ));
             });

@@ -68,8 +68,7 @@ class _CreateContactState extends State<CreateContact> {
                     labelText: "Full Name",
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade300),
+                        fontWeight: FontWeight.bold, color: Colors.grey),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
@@ -89,7 +88,7 @@ class _CreateContactState extends State<CreateContact> {
               TextFormField(
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.green.shade300,
+                    color: Colors.green.shade400,
                     fontWeight: FontWeight.bold,
                   ),
                   validator: (value) {
@@ -113,8 +112,7 @@ class _CreateContactState extends State<CreateContact> {
                     labelText: "Phone Number",
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade300),
+                        fontWeight: FontWeight.bold, color: Colors.grey),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
@@ -159,8 +157,7 @@ class _CreateContactState extends State<CreateContact> {
                     labelText: "Check-in date",
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade300),
+                        fontWeight: FontWeight.bold, color: Colors.grey),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
@@ -207,8 +204,7 @@ class _CreateContactState extends State<CreateContact> {
                     labelText: "Check-in time",
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                     labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade300),
+                        fontWeight: FontWeight.bold, color: Colors.grey),
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontStyle: FontStyle.italic,
