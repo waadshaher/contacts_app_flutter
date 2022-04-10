@@ -46,6 +46,7 @@ class _CreateContactState extends State<CreateContact> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.green.shade400,
@@ -86,6 +87,8 @@ class _CreateContactState extends State<CreateContact> {
                 height: 20,
               ),
               TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.green.shade400,
@@ -130,6 +133,7 @@ class _CreateContactState extends State<CreateContact> {
                 height: 20,
               ),
               DateTimeField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   format: dateFormat,
                   onShowPicker: (context, currentValue) async {
                     return await showRoundedDatePicker(
@@ -175,6 +179,7 @@ class _CreateContactState extends State<CreateContact> {
                 height: 20,
               ),
               DateTimeField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   format: timeFormat,
                   onShowPicker: (context, currentValue) async {
                     final time = await showRoundedTimePicker(
