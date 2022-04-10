@@ -260,7 +260,7 @@ class _CreateContactState extends State<CreateContact> {
                       content: const Text('New contact is added'),
                       duration: const Duration(seconds: 30),
                       action: SnackBarAction(
-                        label: 'Thanks!',
+                        label: 'Okay',
                         onPressed: () {},
                       ),
                     );
