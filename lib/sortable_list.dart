@@ -1,8 +1,11 @@
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
+
+import 'screens/create_new_contact.dart';
 
 class SortablePage extends StatefulWidget {
   @override
@@ -24,6 +27,8 @@ class _SortablePageState extends State<SortablePage> {
   int? sortColumnIndex;
   bool isAscending = false;
   List<User> users = [];
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBarText = const Text('Contacts Dataset');
 
   @override
   void initState() {
@@ -34,21 +39,79 @@ class _SortablePageState extends State<SortablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Contacts Dataset"),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.red, Colors.purple],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
+        appBar: AppBar(
+          title: customSearchBarText,
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.red, Colors.purple],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
+              ),
             ),
           ),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBarText = const ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  } else {
+                    customIcon = const Icon(Icons.search);
+                    customSearchBarText = const Text('Contacts Dataset');
+                  }
+                });
+              },
+              icon: customIcon,
+            )
+          ],
         ),
-      ),
-      body: getContacts(),
-    );
+        body: getContacts(),
+        floatingActionButton: FloatingActionButton(
+          heroTag: 'uniqueTag',
+          hoverElevation: 50,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateContact(),
+                ));
+          },
+          child: Container(
+            width: 60,
+            height: 60,
+            child: const Icon(
+              Icons.add,
+              size: 40,
+            ),
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(colors: [Colors.red, Colors.purple])),
+          ),
+        ));
   }
 
   FutureBuilder<List<User>> getContacts() {
@@ -94,7 +157,17 @@ class _SortablePageState extends State<SortablePage> {
         DateTime time = user.checkIn;
         String formattedDate = DateFormat('d MMM yyyy hh:mm a').format(time);
         final cells = [user.name, user.phoneNumber, formattedDate];
-        return DataRow(cells: getCells(cells));
+        return DataRow(
+            cells: getCells(cells),
+            onLongPress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailView(
+                      userData: user,
+                    ),
+                  ));
+            });
       }).toList();
 
   List<DataCell> getCells(List<dynamic> cells) =>

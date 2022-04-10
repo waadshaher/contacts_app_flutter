@@ -20,7 +20,6 @@ Content-Type: application/json
     "user" : "Noname",
     "phone" : "Please update your phone",
     "check-in": "2020-08-01 12:10:05"
-
 }
 
 ### REST Example 4
