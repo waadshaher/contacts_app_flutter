@@ -30,11 +30,43 @@ class _SortablePageState extends State<SortablePage> {
   int? sortColumnIndex;
   bool isAscending = false;
   List<User> users = [];
+  List<User> usersFiltered = [];
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBarText = const Text('Contacts Dataset');
+  final searchController = TextEditingController();
+  final formatDate = DateFormat('d MMM yyyy hh:mm a');
+  bool hasSearched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(_filterValues);
+  }
+
+  void _filterValues() {
+    var searchVal = searchController.text.toLowerCase();
+    setState(() {
+      usersFiltered = users
+          .where((element) =>
+              element.name.toLowerCase().contains(searchVal) ||
+              element.phoneNumber.toLowerCase().contains(searchVal) ||
+              formatDate
+                  .format(element.checkIn)
+                  .toLowerCase()
+                  .contains(searchVal))
+          .toList();
+      hasSearched = searchVal.isNotEmpty;
+    });
+  }
 
   FutureOr onGoBack(dynamic value) {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,14 +91,15 @@ class _SortablePageState extends State<SortablePage> {
                 setState(() {
                   if (customIcon.icon == Icons.search) {
                     customIcon = const Icon(Icons.cancel);
-                    customSearchBarText = const ListTile(
-                      leading: Icon(
+                    customSearchBarText = ListTile(
+                      leading: const Icon(
                         Icons.search,
                         color: Colors.white,
                         size: 28,
                       ),
                       title: TextField(
-                        decoration: InputDecoration(
+                        controller: searchController,
+                        decoration: const InputDecoration(
                           hintText: 'Search',
                           hintStyle: TextStyle(
                             color: Colors.white,
@@ -75,12 +108,14 @@ class _SortablePageState extends State<SortablePage> {
                           ),
                           border: InputBorder.none,
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     );
                   } else {
+                    usersFiltered = users;
+                    searchController.text = "";
                     customIcon = const Icon(Icons.search);
                     customSearchBarText = const Text('Contacts Dataset');
                   }
@@ -141,11 +176,10 @@ class _SortablePageState extends State<SortablePage> {
     final columns = ['Name', 'Phone', 'Check in'];
 
     return DataTable(
-      sortAscending: isAscending,
-      sortColumnIndex: sortColumnIndex,
-      columns: getColumns(columns),
-      rows: getRows(users),
-    );
+        sortAscending: isAscending,
+        sortColumnIndex: sortColumnIndex,
+        columns: getColumns(columns),
+        rows: getRows(users));
   }
 
   List<DataColumn> getColumns(List<String> columns) => columns
@@ -155,23 +189,31 @@ class _SortablePageState extends State<SortablePage> {
           ))
       .toList();
 
-  List<DataRow> getRows(List<User> users) => users.map((User user) {
-        DateTime time = user.checkIn;
-        String formattedDate = DateFormat('d MMM yyyy hh:mm a').format(time);
-        final cells = [user.name, user.phoneNumber, formattedDate];
-        return DataRow(
-            cells: getCells(cells),
-            onLongPress: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailView(
-                      userData: user,
-                      checkIn: formattedDate,
-                    ),
-                  ));
-            });
-      }).toList();
+  List<DataRow> getRows(List<User> users) {
+    List<User> currentUsersList = [];
+    if (!hasSearched) {
+      currentUsersList = users;
+    } else {
+      currentUsersList = usersFiltered;
+    }
+    return currentUsersList.map((User user) {
+      DateTime time = user.checkIn;
+      String formattedDate = formatDate.format(time);
+      final cells = [user.name, user.phoneNumber, formattedDate];
+      return DataRow(
+          cells: getCells(cells),
+          onLongPress: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailView(
+                    userData: user,
+                    checkIn: formattedDate,
+                  ),
+                ));
+          });
+    }).toList();
+  }
 
   List<DataCell> getCells(List<dynamic> cells) =>
       cells.map((data) => DataCell(Text('$data'))).toList();
