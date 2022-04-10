@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
@@ -30,10 +32,8 @@ class _SortablePageState extends State<SortablePage> {
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBarText = const Text('Contacts Dataset');
 
-  @override
-  void initState() {
-    super.initState();
-    futureUsers = dataService.getUsers();
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
   }
 
   @override
@@ -98,7 +98,7 @@ class _SortablePageState extends State<SortablePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => CreateContact(),
-                ));
+                )).then((onGoBack));
           },
           child: Container(
             width: 60,
@@ -115,6 +115,7 @@ class _SortablePageState extends State<SortablePage> {
   }
 
   FutureBuilder<List<User>> getContacts() {
+    futureUsers = dataService.getUsers();
     return FutureBuilder<List<User>>(
       future: futureUsers,
       builder: (context, snapshot) {
