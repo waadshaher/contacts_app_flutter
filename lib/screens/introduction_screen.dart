@@ -14,18 +14,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const HomePage()),
-    );
-  }
-
-  Widget _buildFullscreenImage() {
-    return Image.asset(
-      'assets/img-1.png',
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.center,
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => SortablePage()),
     );
   }
 
@@ -48,7 +38,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     return IntroductionScreen(
       key: introKey,
       globalFooter: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
@@ -126,7 +116,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       skipOrBackFlex: 0,
       nextFlex: 0,
       showBackButton: true,
-      back: Icon(
+      back: const Icon(
         Icons.arrow_back,
       ),
       next: Icon(Icons.arrow_forward),
@@ -150,18 +140,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Contacts App',
-      home: SortablePage(),
     );
   }
 }
