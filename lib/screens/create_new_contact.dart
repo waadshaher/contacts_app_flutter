@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
+import 'package:vimigo_technical_assessment/widgets/constants.dart';
+
+import '../widgets/text_form_fields.dart';
 
 class CreateContact extends StatefulWidget {
   const CreateContact({Key? key}) : super(key: key);
@@ -16,8 +19,8 @@ class _CreateContactState extends State<CreateContact> {
   final _formKey = GlobalKey<FormState>();
   late String _name;
   late String _phoneNumber;
-  late DateTime _selectedDate;
-  late TimeOfDay _selectedTime;
+  late DateTime selectedDate;
+  late TimeOfDay selectedTime;
   bool _isLoading = false;
   final dateFormat = DateFormat('d MMM yyyy');
   final timeFormat = DateFormat('hh:mm a');
@@ -41,188 +44,35 @@ class _CreateContactState extends State<CreateContact> {
       ),
       body: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Container(
-          padding: EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(32.0),
           child: Column(
             children: <Widget>[
-              TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.green.shade400,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'This is a required field';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _name = value!;
-                    });
-                  },
-                  cursorColor: Colors.blue,
-                  decoration: InputDecoration(
-                    hintText: "What is the contact's name?",
-                    labelText: "Full Name",
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.grey),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.lightBlue)),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                  )),
-              SizedBox(
+              MyTextFormField(
+                  savedValues: _saveName,
+                  isName: true,
+                  myHintText: "What is the contact's name?",
+                  myLabelText: "Full Name"),
+              const SizedBox(
                 height: 20,
               ),
-              TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.green.shade400,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  validator: (value) {
-                    String pattern = r'^(\+?6?01)[0-46-9]-*[0-9]{7,8}$';
-                    RegExp regExp = RegExp(pattern);
-                    if (value == null || value.isEmpty) {
-                      return 'This is a required field';
-                    } else if (!regExp.hasMatch(value)) {
-                      return 'Please enter valid mobile number';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _phoneNumber = value!;
-                    });
-                  },
-                  cursorColor: Colors.blue,
-                  decoration: InputDecoration(
-                    hintText: "What is the contact's phone number?",
-                    labelText: "Phone Number",
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.grey),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.lightBlue)),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                  )),
-              SizedBox(
+              MyTextFormField(
+                savedValues: _savePhone,
+                isName: false,
+                myHintText: "What is the contact's phone number?",
+                myLabelText: "Phone Number",
+              ),
+              const SizedBox(
                 height: 20,
               ),
-              DateTimeField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  format: dateFormat,
-                  onShowPicker: (context, currentValue) async {
-                    return await showRoundedDatePicker(
-                        context: context,
-                        initialDate: currentValue ?? DateTime.now());
-                  },
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.green.shade400,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  cursorColor: Colors.blue,
-                  validator: (value) {
-                    if (value == null) {
-                      return 'This is a required field';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _selectedDate = value!;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Check-in date",
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.grey),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.lightBlue)),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                  )),
-              SizedBox(
+              DatePicker(savedValues: _saveDate),
+              const SizedBox(
                 height: 20,
               ),
-              DateTimeField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  format: timeFormat,
-                  onShowPicker: (context, currentValue) async {
-                    final time = await showRoundedTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    return DateTimeField.convert(time);
-                  },
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.green.shade400,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  cursorColor: Colors.blue,
-                  validator: (value) {
-                    if (value == null) {
-                      return 'This is a required field';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _selectedTime = TimeOfDay.fromDateTime(value!);
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Check-in time",
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.grey),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.lightBlue)),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.lightBlue),
-                    ),
-                  )),
+              TimePicker(
+                savedValues: _saveTime,
+              )
             ],
           ),
         ),
@@ -230,11 +80,11 @@ class _CreateContactState extends State<CreateContact> {
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'uniqueTag',
         label: _isLoading
-            ? CircularProgressIndicator(
+            ? const CircularProgressIndicator(
                 backgroundColor: Colors.white,
               )
             : Row(
-                children: [Icon(Icons.save), Text('Save')],
+                children: const [Icon(Icons.save), Text('Save')],
               ),
         onPressed: _isLoading
             ? null
@@ -242,8 +92,8 @@ class _CreateContactState extends State<CreateContact> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   DateTime combinedDateTime =
-                      DateTimeField.combine(_selectedDate, _selectedTime);
-                  User newUser = new User(
+                      DateTimeField.combine(selectedDate, selectedTime);
+                  User newUser = User(
                     name: _name,
                     phoneNumber: _phoneNumber,
                     checkIn: combinedDateTime,
@@ -269,7 +119,7 @@ class _CreateContactState extends State<CreateContact> {
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateContact(),
+                          builder: (context) => const CreateContact(),
                         ));
                   }
                 }
@@ -277,21 +127,43 @@ class _CreateContactState extends State<CreateContact> {
       ),
     );
   }
+
+  _saveName(String value) {
+    setState(() {
+      _name = value;
+    });
+  }
+
+  _savePhone(String value) {
+    setState(() {
+      _phoneNumber = value;
+    });
+  }
+
+  _saveDate(DateTime value) {
+    setState(() {
+      selectedDate = value;
+    });
+  }
+
+  _saveTime(DateTime value) {
+    setState(() {
+      selectedTime = TimeOfDay.fromDateTime(value);
+    });
+  }
 }
 
-class DatePicker extends StatefulWidget {
-  @override
-  State<DatePicker> createState() => _DatePickerState();
-}
-
-class _DatePickerState extends State<DatePicker> {
-  String date = 'Pick a date';
+class DatePicker extends StatelessWidget {
+  final String date = 'Pick a date';
   final format = DateFormat('d MMM yyyy');
-  late DateTime selectedDate;
+  late final DateTime selectedDate;
+  final Function savedValues;
+  DatePicker({Key? key, required this.savedValues}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DateTimeField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         format: format,
         onShowPicker: (context, currentValue) async {
           return await showRoundedDatePicker(
@@ -299,39 +171,34 @@ class _DatePickerState extends State<DatePicker> {
         },
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: Colors.pink.shade400,
+          color: Colors.green.shade400,
           fontWeight: FontWeight.bold,
         ),
-        onSaved: (value) {
-          setState(() {
-            selectedDate = value!;
-          });
+        cursorColor: Colors.blue,
+        validator: (value) {
+          if (value == null) {
+            return 'This is a required field';
+          }
+          return null;
         },
-        decoration: InputDecoration(
-          labelText: "Check-in date",
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          labelStyle: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.pink.shade300),
-          hintStyle: TextStyle(
-            color: Colors.grey,
-            fontStyle: FontStyle.italic,
-          ),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pink)),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.pink),
-          ),
-        ));
+        onSaved: (value) {
+          savedValues(value);
+        },
+        decoration: myDecorator("Check-in date"));
   }
 }
 
 class TimePicker extends StatelessWidget {
-  String date = 'Pick a date';
+  final String date = 'Pick a date';
   final format = DateFormat('hh:mm a');
+  final Function savedValues;
+
+  TimePicker({Key? key, required this.savedValues}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DateTimeField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         format: format,
         onShowPicker: (context, currentValue) async {
           final time = await showRoundedTimePicker(
@@ -342,23 +209,19 @@ class TimePicker extends StatelessWidget {
         },
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: Colors.pink.shade400,
+          color: Colors.green.shade400,
           fontWeight: FontWeight.bold,
         ),
-        decoration: InputDecoration(
-          labelText: "Check-in time",
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          labelStyle: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.pink.shade300),
-          hintStyle: TextStyle(
-            color: Colors.grey,
-            fontStyle: FontStyle.italic,
-          ),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.pink)),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.pink),
-          ),
-        ));
+        cursorColor: Colors.blue,
+        validator: (value) {
+          if (value == null) {
+            return 'This is a required field';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          savedValues(value);
+        },
+        decoration: myDecorator("Check-in time"));
   }
 }
