@@ -14,6 +14,11 @@ should be shown to educate users how to use the app.
 8. Display an animation using a sprite sheet that is provided in the link below on the
 right bottom of the app.
 ---
+## Steps to run the project
+1. Change directory to ``json_server``
+2. Run ``npm install``
+3. Run ``npm start``
+---
 ## Data Set
 <details>
   <summary>Click to expand!</summary>
