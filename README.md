@@ -14,6 +14,13 @@ should be shown to educate users how to use the app.
 8. Display an animation using a sprite sheet that is provided in the link below on the
 right bottom of the app.
 ---
+## Instructions
+
+This project uses JSON server to simulate real world API and it is configured to run in an Andriod emulator after turning on the server (follow the next section to run 
+the server).
+In order to use with different environment other than Android emulator, edit the IP address (baseUrl) located at [this](https://github.com/waadshaher/vimigo_technical_assessment/blob/master/lib/services/http_service.dart) file.
+
+---
 ## Steps to run the project
 1. Change directory to ``json_server``
 2. Run ``npm install``
