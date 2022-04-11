@@ -1,13 +1,13 @@
 import 'dart:async';
-
+import 'package:flame/flame.dart';
+import 'package:flame/sprite.dart';
+import 'package:flame/widgets.dart';
 import 'package:vimigo_technical_assessment/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:vimigo_technical_assessment/screens/contact_detail.dart';
 import 'package:vimigo_technical_assessment/services/http_service.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:intl/intl.dart';
-import 'create_new_contact.dart';
-
 import 'create_new_contact.dart';
 
 class SortablePage extends StatefulWidget {
@@ -36,6 +36,7 @@ class _SortablePageState extends State<SortablePage> {
   final searchController = TextEditingController();
   final formatDate = DateFormat('d MMM yyyy hh:mm a');
   bool hasSearched = false;
+  var fetchedCoin;
 
   @override
   void initState() {
@@ -72,82 +73,117 @@ class _SortablePageState extends State<SortablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: customSearchBarText,
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue, Colors.green],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-              ),
+      appBar: AppBar(
+        title: customSearchBarText,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.green],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
             ),
           ),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  if (customIcon.icon == Icons.search) {
-                    customIcon = const Icon(Icons.cancel);
-                    customSearchBarText = ListTile(
-                      leading: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                      title: TextField(
-                        controller: searchController,
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
-                          hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  } else {
-                    usersFiltered = users;
-                    searchController.text = "";
-                    customIcon = const Icon(Icons.search);
-                    customSearchBarText = const Text('Contacts Dataset');
-                  }
-                });
-              },
-              icon: customIcon,
-            )
-          ],
         ),
-        body: getContacts(),
-        floatingActionButton: FloatingActionButton(
-          heroTag: 'uniqueTag',
-          hoverElevation: 50,
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateContact(),
-                )).then((onGoBack));
-          },
-          child: Container(
-            width: 60,
-            height: 60,
-            child: const Icon(
-              Icons.add,
-              size: 40,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                if (customIcon.icon == Icons.search) {
+                  customIcon = const Icon(Icons.cancel);
+                  customSearchBarText = ListTile(
+                    leading: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    title: TextField(
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                } else {
+                  usersFiltered = users;
+                  searchController.text = "";
+                  customIcon = const Icon(Icons.search);
+                  customSearchBarText = const Text('Contacts Dataset');
+                }
+              });
+            },
+            icon: customIcon,
+          )
+        ],
+      ),
+      body: getContacts(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FloatingActionButton(
+            heroTag: 'uniqueTag',
+            hoverElevation: 50,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateContact(),
+                  )).then((onGoBack));
+            },
+            child: Container(
+              width: 60,
+              height: 60,
+              child: const Icon(
+                Icons.add,
+                size: 40,
+              ),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient:
+                      LinearGradient(colors: [Colors.blue, Colors.green])),
             ),
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(colors: [Colors.blue, Colors.green])),
           ),
-        ));
+          SizedBox(
+            width: 90,
+          ),
+          getCoin()
+        ],
+      ),
+    );
+  }
+
+  FutureBuilder getCoin() {
+    var spriteSheet = Flame.images.load('animation_spritesheet.png');
+    return FutureBuilder(
+      future: spriteSheet,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          fetchedCoin = snapshot.data ?? [];
+          return Container(
+            height: 100,
+            width: 100,
+            child: SpriteAnimationWidget(
+                animation: SpriteSheet.fromColumnsAndRows(
+                        image: fetchedCoin, columns: 12, rows: 3)
+                    .createAnimation(
+                        from: 0, to: 35, stepTime: 0.06, row: 0, loop: true)),
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return Container();
+      },
+    );
   }
 
   FutureBuilder<List<User>> getContacts() {
