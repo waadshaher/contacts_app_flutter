@@ -1,7 +1,6 @@
-# vimigo_technical_assessment
+# contacts_app_flutter
 
-## Project Requirements
-Your application must have the following:
+## Project features:
 1. Users able to see a sortable list based on the data set provided below.
 2. All the data time format should be display in d MMM Y hh:mm a format
 3. Users are able to search through the list based on the keyword that users key in.
